@@ -1,5 +1,3 @@
-import createValuesState from '../createValuesState'
-
 const text = { name: 'firstName' }
 const textWithInit = { name: 'lastName', init: 'Nguyen' }
 const singleCheckbox = { name: 'isNice', inputType: 'checkbox' }
@@ -18,17 +16,3 @@ export const passedFields = [
   checkboxes, 
   checkboxesWithInit
 ]
-
-const expected = [
-  '', 
-  'Nguyen', 
-  false, 
-  '', 
-  'The Sorrow and the Pity'
-]
-
-describe('createValuesState util', () => {
-  test('creates an array of initial values from form fields passed to api', () => {
-    expect(createValuesState(passedFields)).toStrictEqual(expected)
-  })
-})

@@ -1,0 +1,1 @@
+type OnChange = (i: number) => (e: React.ChangeEvent<HTMLInputElement>) => void

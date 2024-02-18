@@ -1,0 +1,1 @@
+type FormValue = string | boolean

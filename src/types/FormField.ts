@@ -1,7 +1,8 @@
 type FormField = {
   i?: number
-  init: string 
+  init?: string 
   inputType?: InputType
-  options: string[]
+  name: string 
+  options?: string[]
 
 }

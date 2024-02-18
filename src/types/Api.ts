@@ -1,8 +1,8 @@
 type Api = {
   fields: FormField[]
   formName?: string 
-  hideSubmit?: boolean 
-  hideSubmitSpinner: boolean 
+  hideSubmitButton?: boolean 
+  hideSubmitSpinner?: boolean 
   onChange?: Fn 
   onSubmit: Fn 
   submitButtonLabel?: boolean 
