@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 
 import MemoizedField from './MemoizedField'
 
-type MakeInputs = (fields: FormField[], values: FormValue[], onChange: OnChange) => JSX.Element[]
-const makeInputs: MakeInputs = (fields, values, onChange) => {
+type MakeInputs = (fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
+const makeInputs: MakeInputs = (fields, setValues, values) => {
   return fields.map((field, i) => 
-    <MemoizedField field={field} value={values[i]} onChange={onChange} />
+    <MemoizedField field={field} setValues={setValues} value={values[i]} />
   )
-}
+} 
  
 const Form = (props: Props) => {
   const { fields, initialErrorMessages, initialValuesState } = props
@@ -18,13 +18,7 @@ const Form = (props: Props) => {
     setValues(initialValuesState)
   }, [initialValuesState])
 
-  const onChange: OnChange = i => e => {
-    const newValues = [...values]
-    newValues[i] = e.target.value 
-    setValues(newValues)
-  }
-
-  const inputs = makeInputs(fields, values, onChange)
+  const inputs = makeInputs(fields, setValues, values)
 
   return <>{inputs}</>
 }

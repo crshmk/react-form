@@ -1,31 +1,25 @@
 import Password from './Password'
+import Textarea from './Textarea'
+
+import makeInputProps from './makeInputProps'
 
 const getIsPassword = (field: FormField): boolean =>
   field.inputType === 'password'
 
-const Text = ({field, onChange, value}: Props) => {
-  const { inputType, name, placeholder } = field
-  const isDisabled = false
-  const onFocus = () => { console.log('clear validation') }
-  const props = {
-    disabled: isDisabled,
-    name, 
-    onChange: onChange(field.i), 
-    onFocus,
-    placeholder: placeholder || '',
-    type: inputType,
-    value: value as string
-  }
+const Text = (props: Props) => {
+  const inputProps = makeInputProps(props)
 
-  return getIsPassword(field) ? <Password {...props} /> : <input {...props} />
+  return getIsPassword(props.field) 
+  ? <Password {...inputProps} /> 
+  : props.field.inputType === 'textarea' 
+    ? <Textarea {...inputProps} />
+    : <input {...inputProps} />
 }
 
 export default Text
 
-type Props = {
+export type Props = {
   field: FormField 
-  onChange: OnChange
+  setValues: SetValues
   value: string
 }
-
-

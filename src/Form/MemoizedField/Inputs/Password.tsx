@@ -2,7 +2,9 @@ import { useState } from 'react'
 import EyeFilled from '../../../assets/icons/EyeFilled'
 import EyeSlash from '../../../assets/icons/EyeSlash'
 
-const Password = (props: Props) => { 
+import { InputProps } from './makeInputProps'
+
+const Password = (props: InputProps) => { 
   const [inputType, setInputType] = useState('password')
 
   const onToggleViewPassword = () =>
@@ -20,13 +22,3 @@ d    <div className="show-password-button" onClick={onToggleViewPassword}>
 }
 
 export default Password 
-
-type Props = {
-  disabled: boolean
-  name: FormField['name']
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onFocus: Fn
-  placeholder: string
-  type: FormField['inputType']
-  value: string
-}

@@ -5,6 +5,7 @@ type PassedFormField = {
   name: string 
   options?: string[]
   placeholder?: string
+  rows?: number
 }
 
 type FormField = PassedFormField & {

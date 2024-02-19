@@ -1,1 +1,1 @@
-type OnChange = (i: number) => (e: React.ChangeEvent<HTMLInputElement>) => void
+type OnChange = ((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void)
