@@ -29,14 +29,14 @@ const Form = (props: Props) => {
 
   const onSubmit = () => {
     const newErrorMessages = makeErrorMessages(fields, values)
-    
  
     if(anyPresent(newErrorMessages)) {
       setErrorMessages(newErrorMessages)
       return 
     }
 
-    makeSubmitPayload(values)
+    const payload = makeSubmitPayload(fields, values)
+    props.onSubmit && props.onSubmit(payload)
   }
 
   const inputs = makeInputs(fields, setValues, values)
