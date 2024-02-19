@@ -1,16 +1,16 @@
 import Form from './Form'
 
-import addIndices from './addIndices'
-import createValuesState from './createValuesState'
-import makeInitialErrorMessages from './makeInitialErrorMessages'
+import createValuesState from './utils/createValuesState'
+import extendFormFields from './utils/extendFormFields'
+import makeInitialErrorMessages from './utils/makeInitialErrorMessages'
 
-type MakeClassName = (formName: string | undefined) => string 
+type MakeClassName = (formName: Api['formName']) => string 
 const makeClassName: MakeClassName = formName => 
   `react-form ${!formName ? '' : formName.toLowerCase()}`
 
 const FormWrapper = (props: Api) => {
-  let { 
-    fields, 
+  let { fields } = props 
+  const { 
     formName, 
    // hideSubmitButton, 
    // initialValues, 
@@ -24,7 +24,7 @@ const FormWrapper = (props: Api) => {
   const initialValuesState = createValuesState(fields)
   const className = makeClassName(formName)
   const initialErrorMessages = makeInitialErrorMessages(fields)
-  fields = addIndices(fields)
+  fields = extendFormFields(fields)
 
   return (
     <div className={className}>
