@@ -1,10 +1,9 @@
 import { update } from 'ramda'
 import { Props as TextProps} from './Text'
 
-const makeInputProps = ({ field, setValues, value }: TextProps): InputProps => {
+const makeInputProps = ({ clearError, field, setValues, value }: TextProps): InputProps => {
   const { inputType, name, placeholder } = field
   const isDisabled = false
-  const onFocus = () => { console.log('clear validation') }
   const onType: OnChange = e => 
     setValues(update(field.i, e.target.value))
   
@@ -12,7 +11,7 @@ const makeInputProps = ({ field, setValues, value }: TextProps): InputProps => {
     disabled: isDisabled,
     name, 
     onChange: onType, 
-    onFocus,
+    onFocus: clearError(field.i),
     placeholder: placeholder || '',
     type: inputType,
     value: value as string

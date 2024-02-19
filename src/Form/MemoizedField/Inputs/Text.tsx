@@ -19,6 +19,7 @@ const Text = (props: Props) => {
 export default Text
 
 export type Props = {
+  clearError: (i: number) => () => void
   field: FormField 
   setValues: SetValues
   value: string

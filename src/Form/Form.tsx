@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { any, complement, isEmpty } from 'ramda'
+import { any, complement, isEmpty, update } from 'ramda'
 
 import makeErrorMessages from './utils/makeErrorMessages'
 import makeSubmitPayload from './utils/makeSubmitPayload'
@@ -11,10 +11,10 @@ import SubmitButton from './SubmitButton'
 const notEmpty = complement(isEmpty)
 const anyPresent = any(notEmpty)
 
-type MakeInputs = (errorMessages: string[], fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
-const makeInputs: MakeInputs = (errorMessages, fields, setValues, values) => {
+type MakeInputs = (clearError: (i: number) => () => void, errorMessages: string[], fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
+const makeInputs: MakeInputs = (clearError, errorMessages, fields, setValues, values) => {
   return fields.map((field, i) => 
-    <MemoizedField errorMessage={errorMessages[i]} field={field} setValues={setValues} value={values[i]} />
+    <MemoizedField clearError={clearError} errorMessage={errorMessages[i]} field={field} setValues={setValues} value={values[i]} />
   )
 } 
  
@@ -26,6 +26,10 @@ const Form = (props: Props) => {
   useEffect(() => {
     setValues(initialValuesState)
   }, [initialValuesState])
+
+  const clearError = (i: number) => () => {
+    setErrorMessages(update(i, ''))
+  }
 
   const onSubmit = () => {
     const newErrorMessages = makeErrorMessages(fields, values)
@@ -39,7 +43,7 @@ const Form = (props: Props) => {
     props.onSubmit && props.onSubmit(payload)
   }
 
-  const inputs = makeInputs(errorMessages, fields, setValues, values)
+  const inputs = makeInputs(clearError, errorMessages, fields, setValues, values)
 
   return (
     <>

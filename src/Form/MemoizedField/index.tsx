@@ -13,11 +13,12 @@ const getClassName: GetClassName = field => {
   return `form-field form-field-${field.inputType} form-field-${name}`
 }
 
-const MemoizedField = memo(({ errorMessage, field, setValues, value }: Props) => {
+const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value }: Props) => {
 
   const className = getClassName(field)
   
   const inputProps =  {
+    clearError,
     field, 
     setValues,
     value: value as string
@@ -40,6 +41,7 @@ const MemoizedField = memo(({ errorMessage, field, setValues, value }: Props) =>
 export default MemoizedField
 
 type Props = {
+  clearError: (i: number) => () => void
   errorMessage: string
   field: FormField 
   setValues: SetValues
