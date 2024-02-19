@@ -1,1 +1,1 @@
-type InputType = 'text' | 'textarea' | 'options' | 'checkbox' | 'radio' | undefined
+type InputType = 'text' | 'textarea' | 'password' | 'options' | 'checkbox' | 'radio' | undefined

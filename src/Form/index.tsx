@@ -9,8 +9,8 @@ const makeClassName: MakeClassName = formName =>
   `react-form ${!formName ? '' : formName.toLowerCase()}`
 
 const FormWrapper = (props: Api) => {
-  let { fields } = props 
   const { 
+    fields,
     formName, 
    // hideSubmitButton, 
    // initialValues, 
@@ -24,13 +24,13 @@ const FormWrapper = (props: Api) => {
   const initialValuesState = createValuesState(fields)
   const className = makeClassName(formName)
   const initialErrorMessages = makeInitialErrorMessages(fields)
-  fields = extendFormFields(fields)
+  const extendedFields = extendFormFields(fields)
 
   return (
     <div className={className}>
       <Form 
         {...props} 
-        fields={fields}
+        fields={extendedFields}
         initialErrorMessages={initialErrorMessages}
         initialValuesState={initialValuesState}
       />

@@ -1,6 +1,6 @@
 import { isNil, pipe, prop } from 'ramda'
 /**
- * @prop {FormField[]} fields 
+ * @prop {Api['fields']} fields 
  * 
  * @return {(string | boolean)[]} valuesState
  * 
@@ -10,28 +10,28 @@ import { isNil, pipe, prop } from 'ramda'
 
 
 // checkboxes without an options prop are treated as bools
-type IsSingleCheckbox = (field: FormField) => boolean 
+type IsSingleCheckbox = (field: PassedFormField) => boolean 
 const isSingleCheckbox: IsSingleCheckbox = pipe(
   prop('options'),
   isNil
 )
 
-type IsCheckbox = (field: FormField) => boolean 
+type IsCheckbox = (field: PassedFormField) => boolean 
 const isCheckbox: IsCheckbox = field => 
   field.inputType === 'checkbox' 
 
-type CreateCheckboxInit = (field: FormField) => '' | boolean 
+type CreateCheckboxInit = (field: PassedFormField) => '' | boolean 
 const createCheckboxInit: CreateCheckboxInit = field => 
   isSingleCheckbox(field) ? false : ''
 
-type CreateInitialValue = (field: FormField) => string | boolean 
+type CreateInitialValue = (field: PassedFormField) => string | boolean 
 const createInitialValue: CreateInitialValue = field =>
   !!field.init ? field.init : 
     isCheckbox(field) 
     ? createCheckboxInit(field) 
     : ''
 
-type CreateValuesState = (fields: FormField[]) => (string | boolean)[] 
+type CreateValuesState = (fields: Api['fields']) => (string | boolean)[] 
 const createValuesState: CreateValuesState = fields => 
   fields.map(createInitialValue)
 

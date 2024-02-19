@@ -32,6 +32,7 @@ const Form = (props: Props) => {
 export default Form 
 
 type Props = Api & {
+  fields: FormField[],
   initialValuesState: (string | boolean)[] 
   initialErrorMessages: string[]
 }

@@ -1,10 +1,10 @@
 /**
  * set a default inputType of 'text' when not specified
- * @param {FormField[]} fields 
+ * @param {Api['fields']} fields 
  * 
- * @return {FormField[]}
+ * @return {Api['fields']}
  */
-type AddDefaultInputTypes = (fields: FormField[]) => FormField[]
+type AddDefaultInputTypes = (fields: Api['fields']) => Api['fields']
 
 const addDefaultInputTypes: AddDefaultInputTypes = (fields) => 
   fields.map(field => !!field.inputType ? field : {...field, inputType: 'text'})

@@ -3,7 +3,7 @@
  *  - index to track value changes and errors 
  *  - default inputType of 'text' when not specified 
  * 
- *  @param {FormField[]} fields 
+ *  @param {Api['fields']} fields 
  * 
  *  @return {FormField[]}   
  */

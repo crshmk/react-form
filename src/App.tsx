@@ -1,12 +1,11 @@
-import React from 'react'
-
 import './style.css'
 
 import Form from './Form'
 
 const fields = [
   { name: 'one' },
-  { name: 'two' }
+  { name: 'two' },
+  { name: 'password', inputType: 'password' as InputType }
 ]
 
 const App = () => (

@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import Label from './Label'
+import Text from './Inputs/Text'
 
 type Props = {
   field: FormField 
@@ -19,18 +20,21 @@ const getClassName: GetClassName = field => {
 }
 
 const MemoizedField = memo(({ field, value, onChange }: Props) => {
-  const i = field.i as number 
   console.log(field, value)
-  // temp; no checkbox yet  
-  const v = value as string 
 
   const className = getClassName(field)
+  
+  const inputProps =  {
+    field, 
+    onChange,
+    value: value as string
+  }
 
   return (
-    <div key={field.name} className={className} >
+    <div key={field.name} className={className}>
       <div className="form-item">
       <Label field={field}>
-      <input type="text" value={v} onChange={onChange(i)} />
+        <Text {...inputProps} />
       </Label>
       </div>
     </div>

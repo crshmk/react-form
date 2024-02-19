@@ -1,5 +1,5 @@
 type Api = {
-  fields: FormField[]
+  fields: PassedFormField[]
   formName?: string 
   hideSubmitButton?: boolean 
   hideSubmitSpinner?: boolean 
