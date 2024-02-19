@@ -1,4 +1,7 @@
+type Validator = [Validation, string]
+
 type PassedFormField = {
+  errorMessage?: string 
   init?: string 
   inputType?: InputType
   label?: string 
@@ -6,6 +9,7 @@ type PassedFormField = {
   options?: string[]
   placeholder?: string
   rows?: number
+  validation?: Validation
 }
 
 type FormField = PassedFormField & {

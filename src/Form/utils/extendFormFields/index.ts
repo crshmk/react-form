@@ -7,9 +7,10 @@
  * 
  *  @return {FormField[]}   
  */
-import { pipe } from 'ramda'
 import addDefaultInputTypes from './addDefaultInputTypes'
 import addIndices from './addIndices'
+
+import { pipe } from 'ramda'
 
 const formatPassedInputFields = pipe(
   addDefaultInputTypes,
