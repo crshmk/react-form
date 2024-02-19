@@ -5,7 +5,7 @@ import Text from './Inputs/Text'
 
 type IsValueUnchanged = (prev: Props, next: Props) => boolean
 const isValueUnchanged: IsValueUnchanged = (prev, next) => 
-  prev.value === next.value 
+  prev.value === next.value && prev.errorMessage === next.errorMessage
 
 type GetClassName = (field: FormField) => string 
 const getClassName: GetClassName = field => {
@@ -13,8 +13,7 @@ const getClassName: GetClassName = field => {
   return `form-field form-field-${field.inputType} form-field-${name}`
 }
 
-const MemoizedField = memo(({ field, setValues, value }: Props) => {
-  console.log(field, value)
+const MemoizedField = memo(({ errorMessage, field, setValues, value }: Props) => {
 
   const className = getClassName(field)
   
@@ -31,15 +30,17 @@ const MemoizedField = memo(({ field, setValues, value }: Props) => {
         <Text {...inputProps} />
       </Label>
       </div>
+      {!!errorMessage && (
+        <p className="field-error-message">{errorMessage}</p>
+      )}
     </div>
   )
-
-  return 
 }, isValueUnchanged)
 
 export default MemoizedField
 
 type Props = {
+  errorMessage: string
   field: FormField 
   setValues: SetValues
   value: FormValue

@@ -11,10 +11,10 @@ import SubmitButton from './SubmitButton'
 const notEmpty = complement(isEmpty)
 const anyPresent = any(notEmpty)
 
-type MakeInputs = (fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
-const makeInputs: MakeInputs = (fields, setValues, values) => {
+type MakeInputs = (errorMessages: string[], fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
+const makeInputs: MakeInputs = (errorMessages, fields, setValues, values) => {
   return fields.map((field, i) => 
-    <MemoizedField field={field} setValues={setValues} value={values[i]} />
+    <MemoizedField errorMessage={errorMessages[i]} field={field} setValues={setValues} value={values[i]} />
   )
 } 
  
@@ -39,7 +39,7 @@ const Form = (props: Props) => {
     props.onSubmit && props.onSubmit(payload)
   }
 
-  const inputs = makeInputs(fields, setValues, values)
+  const inputs = makeInputs(errorMessages, fields, setValues, values)
 
   return (
     <>
