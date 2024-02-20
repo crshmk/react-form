@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import EyeFilled from '../../../assets/icons/EyeFilled'
-import EyeSlash from '../../../assets/icons/EyeSlash'
+import EyeFilled from '../../../../assets/icons/EyeFilled'
+import EyeSlash from '../../../../assets/icons/EyeSlash'
 
-import { InputProps } from './makeInputProps'
+import { InputProps } from '../makeInputProps'
 
 const Password = (props: InputProps) => { 
   const [inputType, setInputType] = useState('password')

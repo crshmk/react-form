@@ -1,7 +1,7 @@
 import Password from './Password'
 import Textarea from './Textarea'
 
-import makeInputProps from './makeInputProps'
+import makeInputProps from '../makeInputProps'
 
 const getIsPassword = (field: FormField): boolean =>
   field.inputType === 'password'

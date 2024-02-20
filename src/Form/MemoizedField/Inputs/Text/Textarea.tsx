@@ -1,4 +1,4 @@
-import { InputProps } from './makeInputProps'
+import { InputProps } from '../makeInputProps'
 
 const Textarea = (props: Props) => {
   return <textarea {...props} rows={10} />

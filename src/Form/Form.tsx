@@ -51,7 +51,6 @@ const Form = (props: Props) => {
     <SubmitButton onSubmit={onSubmit} />
     </>
   ) 
-
 }
 
 export default Form 

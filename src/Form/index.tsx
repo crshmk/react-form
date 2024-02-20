@@ -1,7 +1,7 @@
 import Form from './Form'
 
 import createValuesState from './utils/createValuesState'
-import extendFormFields from './utils/extendFormFields'
+import extendFields from './utils/extendFields'
 import makeInitialErrorMessages from './utils/makeInitialErrorMessages'
 
 type MakeClassName = (formName: Api['formName']) => string 
@@ -24,8 +24,7 @@ const FormWrapper = (props: Api) => {
   const initialValuesState = createValuesState(fields)
   const className = makeClassName(formName)
   const initialErrorMessages = makeInitialErrorMessages(fields)
-  const extendedFields = extendFormFields(fields)
-
+  const extendedFields: FormField[] = extendFields(fields)
 
   return (
     <div className={className}>

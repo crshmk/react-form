@@ -12,9 +12,10 @@ import addIndices from './addIndices'
 
 import { pipe } from 'ramda'
 
-const formatPassedInputFields = pipe(
+type ExtendFields = (fields: Api['fields']) => FormField[]
+const extendFields: ExtendFields = pipe(
   addDefaultInputTypes,
   addIndices
 )
 
-export default formatPassedInputFields
+export default extendFields

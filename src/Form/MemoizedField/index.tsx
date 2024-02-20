@@ -1,7 +1,17 @@
-import { memo } from 'react'
+import { memo, ReactNode, ReactElement } from 'react'
+
+import { always, cond, equals } from 'ramda'
 
 import Label from './Label'
+import Select from './Inputs/Select'
 import Text from './Inputs/Text'
+
+const getInput = cond([
+  [equals('text'), always(Text)],
+  [equals('textarea'), always(Text)],
+  [equals('password'), always(Text)],
+  [equals('select'), always(Select)]
+])
 
 type IsValueUnchanged = (prev: Props, next: Props) => boolean
 const isValueUnchanged: IsValueUnchanged = (prev, next) => 
@@ -14,6 +24,7 @@ const getClassName: GetClassName = field => {
 }
 
 const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value }: Props) => {
+  const { inputType } = field 
 
   const className = getClassName(field)
   
@@ -24,11 +35,17 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
     value: value as string
   }
 
+  const Input = getInput(field.inputType) // JSX.Element
+
   return (
     <div key={field.name} className={className}>
       <div className="form-item">
       <Label field={field}>
-        <Text {...inputProps} />
+        {
+        ['text', 'textarea', 'password'].includes(inputType)
+        ? <Text {...inputProps} />
+        : <Select {...inputProps as SelectInputProps} />
+        }
       </Label>
       </div>
       {!!errorMessage && (

@@ -3,15 +3,16 @@ type Validator = [Validation, string]
 type PassedFormField = {
   errorMessage?: string 
   init?: string 
-  inputType?: InputType
+  inputType?: PassedInputType
   label?: string 
   name: string 
-  options?: string[]
+  options?: (SelectOption | string)[]
   placeholder?: string
   rows?: number
   validation?: Validation
 }
 
-type FormField = PassedFormField & {
+type FormField = Omit<PassedFormField, 'inputType'> & {
   i: number
+  inputType: InputType
 }
