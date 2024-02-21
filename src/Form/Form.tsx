@@ -5,19 +5,12 @@ import { any, complement, isEmpty, update } from 'ramda'
 import makeErrorMessages from './utils/makeErrorMessages'
 import makeSubmitPayload from './utils/makeSubmitPayload'
 
-import MemoizedField from './MemoizedField'
+import Fields from './Fields'
 import SubmitButton from './SubmitButton'
 
 const notEmpty = complement(isEmpty)
 const anyPresent = any(notEmpty)
 
-type MakeInputs = (clearError: (i: number) => () => void, errorMessages: string[], fields: FormField[], setValues: SetValues, values: FormValue[]) => JSX.Element[]
-const makeInputs: MakeInputs = (clearError, errorMessages, fields, setValues, values) => {
-  return fields.map((field, i) => 
-    <MemoizedField clearError={clearError} errorMessage={errorMessages[i]} field={field} setValues={setValues} value={values[i]} />
-  )
-} 
- 
 const Form = (props: Props) => {
   const { fields, initialErrorMessages, initialValuesState } = props
   const [values, setValues] = useState(initialValuesState)
@@ -43,11 +36,17 @@ const Form = (props: Props) => {
     props.onSubmit && props.onSubmit(payload)
   }
 
-  const inputs = makeInputs(clearError, errorMessages, fields, setValues, values)
+  const fieldsProps = {
+    clearError, 
+    errorMessages, 
+    fields, 
+    setValues, 
+    values
+  }
 
   return (
     <>
-    {inputs}
+    <Fields {...fieldsProps}/>
     <SubmitButton onSubmit={onSubmit} />
     </>
   ) 
