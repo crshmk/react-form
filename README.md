@@ -124,12 +124,14 @@ The above form creates this html
 'checkbox' | 'checkboxes' | 'password' | 'radio' | 'select' | 'text' | 'textarea' | undefined
 ```
 - `label: string` label for the form field; defaults to the pascal case version of the `name`  
-- `onSubmit: (payload: formPayload) => {}` the callback for the submit button
+- `onSubmit: (payload: formPayload) => any` the callback for the submit button
 - `validation: (value: formValue) => boolean` a validation function to run on the field onSubmit. If any validations return false, onSubmit is not called, and errors are appended to respective form fields. 
 - `errorMessage: string` defaults to 'Error'
 - `placeholder: string` 
 - `options: string[]`: options for a radio or checkbox group 
 - `rows: number` for textarea; defaults to `10`
+- `onChange: (payload: formPayload) => any` handler to emit the submit payload on each form change 
+- `isSubmitButtonHidden: boolean` useful if you only need the `onChange` handler
 ---
 
 ## Defining Fields

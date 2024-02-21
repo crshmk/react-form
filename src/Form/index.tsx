@@ -11,14 +11,7 @@ const makeClassName: MakeClassName = formName =>
 const FormWrapper = (props: Api) => {
   const { 
     fields,
-    formName, 
-   // hideSubmitButton, 
-   // initialValues, 
-   // initialValidations, 
-   // isSubmitSpinnerShowing,
-   // onChange, 
-   // onSubmit, 
-   // submitButtonLabel 
+    formName
   } = props
 
   const className = makeClassName(formName)
@@ -39,4 +32,3 @@ const FormWrapper = (props: Api) => {
 }
 
 export default FormWrapper
-

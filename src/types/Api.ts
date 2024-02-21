@@ -1,9 +1,12 @@
 type Api = {
   fields: PassedFormField[]
   formName?: string 
-  hideSubmitButton?: boolean 
-  hideSubmitSpinner?: boolean 
-  onChange?: Fn 
-  onSubmit: Fn 
+  isSubmitButtonHidden?: boolean
+  onChange?: (payload: SubmitPayload) => any
+  onSubmit?: (payload: SubmitPayload) => any
   submitButtonLabel?: string 
+}
+
+type SubmitPayload = {
+  [x: string]: FormValue
 }

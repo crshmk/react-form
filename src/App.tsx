@@ -46,8 +46,10 @@ const fields: PassedFormField[] = [
 const App = () => (
   <Form 
     fields={fields} 
+    onChange={console.log}
     onSubmit={console.log} 
     submitButtonLabel="GoForIt"
+    isSubmitButtonHidden={true}
   />
 )
 

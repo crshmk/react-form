@@ -12,13 +12,26 @@ const notEmpty = complement(isEmpty)
 const anyPresent = any(notEmpty)
 
 const Form = (props: Props) => {
-  const { fields, initialErrorMessages, initialValuesState, submitButtonLabel } = props
+  const { 
+    fields, 
+    initialErrorMessages, 
+    initialValuesState, 
+    isSubmitButtonHidden, 
+    submitButtonLabel 
+  } = props
   const [values, setValues] = useState(initialValuesState)
   const [errorMessages, setErrorMessages] = useState(initialErrorMessages)
 
   useEffect(() => {
     setValues(initialValuesState)
   }, [initialValuesState])
+
+  useEffect(() => {
+    if(props.onChange) {
+      const submitPayload = makeSubmitPayload(props.fields, values)
+      props.onChange(submitPayload)
+    }
+  }, [values])
 
   const clearError = (i: number) => () => {
     setErrorMessages(update(i, ''))
@@ -48,6 +61,7 @@ const Form = (props: Props) => {
     <>
     <Fields {...fieldsProps}/>
     <SubmitButton 
+      isSubmitButtonHidden={isSubmitButtonHidden}
       onSubmit={onSubmit} 
       submitButtonLabel={submitButtonLabel} 
     />

@@ -1,6 +1,5 @@
-
-const Submit = ({onSubmit, submitButtonLabel}: Props) => {
-  return (
+const SubmitButton = ({isSubmitButtonHidden, onSubmit, submitButtonLabel}: Props) => {
+  return isSubmitButtonHidden? null : (
     <button 
       type="submit" 
       onClick={onSubmit}
@@ -10,9 +9,10 @@ const Submit = ({onSubmit, submitButtonLabel}: Props) => {
   )
 }
 
-export default Submit 
+export default SubmitButton 
 
 type Props = {
+  isSubmitButtonHidden: boolean | undefined
   onSubmit: () => void
   submitButtonLabel: string | undefined
 }
