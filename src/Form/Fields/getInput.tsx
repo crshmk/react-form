@@ -3,6 +3,7 @@ import { always, cond, equals, T } from 'ramda'
 
 import Checkbox from './Inputs/Checkbox'
 import Checkboxes from './Inputs/Checkboxes'
+import Radio from './Inputs/Radio'
 import Select from './Inputs/Select'
 import Text from './Inputs/Text'
 
@@ -15,6 +16,7 @@ const getInput: GetInput = cond([
   [equals('select'), always(Select)],
   [equals('checkbox'), always(Checkbox)],
   [equals('checkboxes'), always(Checkboxes)],
+  [equals('radio'), always(Radio)],
   [T, always(Text)],
 ])
 

@@ -21,3 +21,7 @@ type CheckboxesInputProps = InputProps & {
   }
   value: string[]
 }
+
+type RadioInputProps = CheckboxesInputProps & {
+  value: string
+}

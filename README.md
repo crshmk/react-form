@@ -123,6 +123,22 @@ fields without an 'inputType' prop default to inputType `text`
 ```
 > submits { colors: ['red'] }
 
+
+### Radio Group
+```jsx 
+<>
+<input type="radio" value="dog" checked={true} />
+<input type="radio" value="wildaboar" checked={false} />
+</>
+```
+```javascript 
+{
+  name: 'animal',
+  inputType: 'checkboxes',
+  options: ['dog', 'wildaboar']
+}
+```
+> submits { animal: 'wildaboar' }
 ---
 
 dev notes:

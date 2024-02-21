@@ -11,7 +11,8 @@ const fields = [
   { name: 'description', inputType: 'textarea' as InputType },
   { name: 'colors', inputType: 'select' as InputType, options: ['red', 'blue', 'green']},
   { name: 'isNice', inputType: 'checkbox' as InputType },
-  { name: 'numbers', inputType: 'checkboxes' as InputType, options: ['one', 'two'] }
+  { name: 'numbers', inputType: 'checkboxes' as InputType, options: ['one', 'two'] },
+  { name: 'animals', inputType: 'radio' as InputType, options: ['dog', 'wildaboar'] }
 ]
 
 const App = () => (

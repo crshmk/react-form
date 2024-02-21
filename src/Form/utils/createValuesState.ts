@@ -29,7 +29,7 @@ type GetInitialValueForInputType = (inputType: InputType) => FormValue
 const getDefaultValueForInputType: GetInitialValueForInputType = cond([
   [equals('checkbox'), always(false)],
   [equals('checkboxes'), always([])],
-  [includes(__, ['text', 'password', 'textarea', 'select']), always('')],
+  [includes(__, ['password', 'radio', 'select', 'text', 'textarea']), always('')],
   [T, always('')]
 ])
 
