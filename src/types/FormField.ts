@@ -2,7 +2,7 @@ type Validator = [Validation, string]
 
 type PassedFormField = {
   errorMessage?: string 
-  init?: string 
+  initialValue?: string | boolean
   inputType?: PassedInputType
   label?: string 
   name: string 
@@ -18,5 +18,5 @@ type FormField = Omit<PassedFormField, 'inputType'> & {
 }
 
 type OptionsFormField = FormField & {
-  options?: (SelectOption | string)[]
+  options: (SelectOption | string)[]
 }

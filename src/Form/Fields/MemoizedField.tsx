@@ -2,7 +2,8 @@ import { memo } from 'react'
 
 import ErrorMessage from './ErrorMessage'
 import Label from './Label'
-import Input from './Input'
+
+import getInput from './getInput'
 
 type IsFieldUnchanged = (prev: Props, next: Props) => boolean
 const isFieldUnchanged: IsFieldUnchanged = (prev, next) => 
@@ -26,11 +27,14 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
     value: value as string
   }
 
+  const Input = getInput(inputType)
+
   return (
     <div key={field.name} className={className}>
       <div className="form-item">
       <Label field={field}>
-        <Input inputProps={inputProps} inputType={inputType} />
+        {/* @ts-ignore */}
+        <Input {...inputProps} />
       </Label>
       </div>
       <ErrorMessage errorMessage={errorMessage} />

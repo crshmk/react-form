@@ -21,10 +21,10 @@ const FormWrapper = (props: Api) => {
    // submitButtonLabel 
   } = props
 
-  const initialValuesState = createValuesState(fields)
   const className = makeClassName(formName)
   const initialErrorMessages = makeInitialErrorMessages(fields)
   const extendedFields: FormField[] = extendFields(fields)
+  const initialValuesState = createValuesState(extendedFields)
 
   return (
     <div className={className}>

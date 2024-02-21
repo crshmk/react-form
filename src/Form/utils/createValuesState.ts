@@ -1,38 +1,45 @@
-import { isNil, pipe, prop } from 'ramda'
+// @ts-nocheck
 /**
- * @prop {Api['fields']} fields 
+ * @prop {FormField[]} fields 
  * 
- * @return {(string | boolean)[]} valuesState
+ * @return {FormValue[]} initial values state
  * 
- * create an array of form values to be tracked by index
- * all values are strings, except single checkboxes, which are bools 
+ * creates the shape of the values state for form items, 
+ *   which is an array of form values to be tracked by index
+ * all values are strings, except 
+ *   single checkbox -> bool
+ *   checkbox group -> string[]
  */
+import { 
+  __, 
+  always, 
+  cond, 
+  equals, 
+  ifElse,
+  includes, 
+  isNil, 
+  map, 
+  pipe, 
+  prop, 
+  T 
+} from 'ramda'
 
+// TODO so tired of TS-cond gymnastics
+type GetInitialValueForInputType = (inputType: InputType) => FormValue
+const getDefaultValueForInputType: GetInitialValueForInputType = cond([
+  [equals('checkbox'), always(false)],
+  [equals('checkboxes'), always([])],
+  [includes(__, ['text', 'password', 'textarea', 'select']), always('')],
+  [T, always('')]
+])
 
-// checkboxes without an options prop are treated as bools
-type IsSingleCheckbox = (field: PassedFormField) => boolean 
-const isSingleCheckbox: IsSingleCheckbox = pipe(
-  prop('options'),
-  isNil
+const getInitialValue = ifElse(
+  pipe(prop('initialValue'), isNil),
+  pipe(prop('inputType'),getDefaultValueForInputType),
+  prop('initialValue') 
 )
 
-type IsCheckbox = (field: PassedFormField) => boolean 
-const isCheckbox: IsCheckbox = field => 
-  field.inputType === 'checkbox' 
+type GetInitialValues = (fields: FormField[]) => FormValue[]
+const getInitialValues: GetInitialValues = map(getInitialValue)
 
-type CreateCheckboxInit = (field: PassedFormField) => '' | boolean 
-const createCheckboxInit: CreateCheckboxInit = field => 
-  isSingleCheckbox(field) ? false : ''
-
-type CreateInitialValue = (field: PassedFormField) => string | boolean 
-const createInitialValue: CreateInitialValue = field =>
-  !!field.init ? field.init : 
-    isCheckbox(field) 
-    ? createCheckboxInit(field) 
-    : ''
-
-type CreateValuesState = (fields: Api['fields']) => (string | boolean)[] 
-const createValuesState: CreateValuesState = fields => 
-  fields.map(createInitialValue)
-
-export default createValuesState
+export default getInitialValues

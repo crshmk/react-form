@@ -1,34 +1,27 @@
 import createValuesState from '../createValuesState'
 
-const text = { name: 'firstName' }
-const textWithInit = { name: 'lastName', init: 'Nguyen' }
-const singleCheckbox = { name: 'isNice', inputType: 'checkbox' }
-const checkboxes = { name: 'hobbies', inputType: 'checkbox', options: ['running', 'walking'] }
-const checkboxesWithInit = { 
-  name: 'books', 
-  inputType: 'checkbox', 
-  options: ['The Sorrow and the Pity', 'The Cat Who Likes Potato Soup'],
-  init: 'The Sorrow and the Pity'
-}
-
-export const passedFields = [
-  text,
-  textWithInit, 
-  singleCheckbox, 
-  checkboxes, 
-  checkboxesWithInit
-]
-
-const expected = [
-  '', 
-  'Nguyen', 
-  false, 
-  '', 
-  'The Sorrow and the Pity'
-]
-
 describe('createValuesState util', () => {
-  test('creates an array of initial values from form fields passed to api', () => {
-    expect(createValuesState(passedFields)).toStrictEqual(expected)
+  test('creates an array of initial values from extended form fields', () => {
+    const fields = [{name: 'one', inputType: 'text'}, {name: 'two', inputType: 'select'}]
+    const expected = ['', '']
+    expect(createValuesState(fields)).toStrictEqual(expected)
+  })
+  test('sets an initial value when declared', () => {
+    const fields = [{name: 'one'}, {name: 'two', initialValue: 'init'}]
+    const expected = ['', 'init']
+    expect(createValuesState(fields)).toStrictEqual(expected)
+  })
+  test('sets a boolean for single checkboxes and an empty array or array with init value for a group of checkboxes', () => {
+    const singleCheckbox = { name: 'isNice', inputType: 'checkbox' }
+    const checkboxes = { name: 'hobbies', inputType: 'checkboxes', options: ['running', 'walking'] }
+    const checkboxesWithInit = { 
+      name: 'books', 
+      inputType: 'checkboxes', 
+      options: ['The Sorrow and the Pity', 'The Cat Who Likes Potato Soup'],
+      initialValue: ['The Sorrow and the Pity']
+    }
+    const fields = [singleCheckbox, checkboxes, checkboxesWithInit]
+    const expected = [false, [], ['The Sorrow and the Pity']]
+    expect(createValuesState(fields)).toStrictEqual(expected)
   })
 })

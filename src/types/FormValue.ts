@@ -1,1 +1,1 @@
-type FormValue = string | boolean
+type FormValue = string | boolean | string[]

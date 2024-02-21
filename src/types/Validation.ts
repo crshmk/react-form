@@ -1,1 +1,1 @@
-type Validation = (value: string | boolean) => boolean
+type Validation = (value: FormValue) => boolean

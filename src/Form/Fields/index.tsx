@@ -9,6 +9,7 @@ const makeFields: makeFields = ({
   values 
 }) => fields.map((field, i) => (
     <MemoizedField 
+      key={field.name}
       clearError={clearError} 
       errorMessage={errorMessages[i]} 
       field={field} 
@@ -20,7 +21,7 @@ const makeFields: makeFields = ({
 const Fields = (props: FieldProps) => {
 
   const fields = makeFields(props)
-
+  
   return <>{fields}</>
 }
 
