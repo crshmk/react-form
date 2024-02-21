@@ -2,19 +2,47 @@ import './style.css'
 
 import Form from './Form'
 
-import { minLen } from './validations'
+import { isRequired, minLen } from './validations'
 
-const fields = [
-  { name: 'one', validation: minLen(2), errorMessage: 'must be two len' },
-  { name: 'two', validation: minLen(2) },
-  { name: 'password', inputType: 'password' as InputType },
-  { name: 'description', inputType: 'textarea' as InputType },
-  { name: 'colors', inputType: 'select' as InputType, options: ['red', 'blue', 'green']},
-  { name: 'isNice', inputType: 'checkbox' as InputType },
-  { name: 'numbers', inputType: 'checkboxes' as InputType, options: ['one', 'two'] },
-  { name: 'animals', inputType: 'radio' as InputType, options: ['dog', 'wildaboar'] }
+const fields: PassedFormField[] = [
+  {
+    name: 'firstName'
+  },
+  {
+    name: 'lastName',
+    inputType: 'text',
+    validation: isRequired,
+    errorMessage: 'Please enter your last name'
+  },
+  {
+    name: 'description',
+    inputType: 'textarea',
+    validation: minLen(10),
+    errorMessage: 'Please enter a description',
+    placeholder: 'Tell us all about it'
+  },
+  {
+    name: 'favoriteColor',
+    label: 'Choose your favorite color',
+    inputType: 'select', 
+    options: ['', 'red', 'green', 'blue']
+  },
+  {
+    name: 'animal',
+    inputType: 'radio',
+    options: ['dog', 'wildaboar']
+  },
+  {
+    name: 'isHungry',
+    inputType: 'checkbox',
+    label: 'Are you hungry?'
+  },
+  {
+    name: 'countries',
+    inputType: 'checkboxes',
+    options: ['USA', 'Vietnam', 'Arigonia']
+  }
 ]
-
 const App = () => (
   <Form 
     fields={fields} 
