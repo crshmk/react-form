@@ -47,6 +47,7 @@ const App = () => (
   <Form 
     fields={fields} 
     onSubmit={console.log} 
+    submitButtonLabel="GoForIt"
   />
 )
 

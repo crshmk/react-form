@@ -12,7 +12,7 @@ const notEmpty = complement(isEmpty)
 const anyPresent = any(notEmpty)
 
 const Form = (props: Props) => {
-  const { fields, initialErrorMessages, initialValuesState } = props
+  const { fields, initialErrorMessages, initialValuesState, submitButtonLabel } = props
   const [values, setValues] = useState(initialValuesState)
   const [errorMessages, setErrorMessages] = useState(initialErrorMessages)
 
@@ -47,7 +47,10 @@ const Form = (props: Props) => {
   return (
     <>
     <Fields {...fieldsProps}/>
-    <SubmitButton onSubmit={onSubmit} />
+    <SubmitButton 
+      onSubmit={onSubmit} 
+      submitButtonLabel={submitButtonLabel} 
+    />
     </>
   ) 
 }

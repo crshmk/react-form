@@ -5,5 +5,5 @@ type Api = {
   hideSubmitSpinner?: boolean 
   onChange?: Fn 
   onSubmit: Fn 
-  submitButtonLabel?: boolean 
+  submitButtonLabel?: string 
 }
