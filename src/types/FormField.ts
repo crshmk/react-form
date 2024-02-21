@@ -16,3 +16,7 @@ type FormField = Omit<PassedFormField, 'inputType'> & {
   i: number
   inputType: InputType
 }
+
+type OptionsFormField = FormField & {
+  options?: (SelectOption | string)[]
+}

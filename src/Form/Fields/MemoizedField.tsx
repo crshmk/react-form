@@ -1,20 +1,11 @@
 import { memo } from 'react'
 
-import { always, cond, equals } from 'ramda'
-
+import ErrorMessage from './ErrorMessage'
 import Label from './Label'
-import Select from './Inputs/Select'
-import Text from './Inputs/Text'
+import Input from './Input'
 
-const getInput = cond([
-  [equals('text'), always(Text)],
-  [equals('textarea'), always(Text)],
-  [equals('password'), always(Text)],
-  [equals('select'), always(Select)]
-])
-
-type IsValueUnchanged = (prev: Props, next: Props) => boolean
-const isValueUnchanged: IsValueUnchanged = (prev, next) => 
+type IsFieldUnchanged = (prev: Props, next: Props) => boolean
+const isFieldUnchanged: IsFieldUnchanged = (prev, next) => 
   prev.value === next.value && prev.errorMessage === next.errorMessage
 
 type GetClassName = (field: FormField) => string 
@@ -35,25 +26,17 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
     value: value as string
   }
 
-  const Input = getInput(field.inputType) // JSX.Element
-
   return (
     <div key={field.name} className={className}>
       <div className="form-item">
       <Label field={field}>
-        {
-        ['text', 'textarea', 'password'].includes(inputType)
-        ? <Text {...inputProps} />
-        : <Select {...inputProps as SelectInputProps} />
-        }
+        <Input inputProps={inputProps} inputType={inputType} />
       </Label>
       </div>
-      {!!errorMessage && (
-        <p className="field-error-message">{errorMessage}</p>
-      )}
+      <ErrorMessage errorMessage={errorMessage} />
     </div>
   )
-}, isValueUnchanged)
+}, isFieldUnchanged)
 
 export default MemoizedField
 
