@@ -4,18 +4,21 @@ import { update } from 'ramda'
 
 import CheckIcon from '../../../../assets/icons/Check'
 
-const makeCheckbox = (onChange: OnChange, value: string[]) => (option: string) => {
+const makeCheckbox = (onChange: OnChange, field: FormField, value: string[]) => (option: string) => {
 
   const isChecked = value.includes(option)
 
   return (
-    <input 
-      key={option}
-      type="checkbox" 
-      value={option} 
-      checked={isChecked} 
-      onChange={onChange} 
-    />
+    <label>
+      {option}
+      <input 
+        key={option}
+        type="checkbox" 
+        value={option} 
+        checked={isChecked} 
+        onChange={onChange} 
+      />
+    </label>
   )
 }
 
@@ -27,7 +30,7 @@ const Checkboxes = ({field, setValues, value}: CheckboxesInputProps) => {
     setValues(update(field.i, newValues))
   }
 
-  return <>{options.map(makeCheckbox(onChange, value))}</>
+  return <>{options.map(makeCheckbox(onChange, field, value))}</>
 }
 
 export default Checkboxes 
