@@ -1,3 +1,3 @@
-type PassedInputType = 'text' | 'textarea' | 'password' | 'select' | 'checkbox' | 'checkboxes' | 'radio' | undefined
+type PassedInputType = 'checkbox' | 'checkboxes' | 'password' | 'radio' | 'select' | 'text' | 'textarea' | undefined
 
 type InputType = Exclude<PassedInputType, undefined>
