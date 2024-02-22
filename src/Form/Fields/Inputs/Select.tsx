@@ -16,7 +16,7 @@ const Select = ({ field, setValues, value }: Props) => {
   }
 
   return (
-    <select onChange={onChange} value={value}>
+    <select name={field.name} onChange={onChange} value={value}>
       {makeOptions(options)}
     </select>
   )

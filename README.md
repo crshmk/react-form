@@ -1,30 +1,34 @@
 My React form solution 
 
---- 
+I don't like a log of logic in my component files, so I do it this way. 
 
-##### 1. Declare a collection of fields
+This might be a good solution for you if you like writing your own CSS. 
+
+--- 
 
 ```javascript 
 import { validations } from 'react-form'
 
-const { isRequired } = validations 
+const { minLen } = validations 
 
-const fields = [
+const userFormFields = [
   {
     name: 'firstName'
   },
   {
     name: 'lastName',
     inputType: 'text',
-    validations: [isRequired],
+    validations: minLen(2),
     errorMessage: 'Please enter your last name'
   },
   {
     name: 'description',
     inputType: 'textarea',
-    validation: minLen(10),
-    errorMessage: 'Please enter a description',
     placeholder: 'Tell us all about it'
+  },
+    {
+    name: 'password',
+    inputType: 'password'
   },
   {
     name: 'favoriteColor',
@@ -49,189 +53,209 @@ const fields = [
   }
 ]
 
-
+export default userFormFields
 ```
-
-##### 2. Pass them to the Form element
 
 ```javascript 
 import Form from 'react-form'
 
-<Form fields={fields} onSubmit={console.log}/>
+import userFormFields from './userFormFields'
+
+const UserForm = () => 
+  <Form fields={userFormFields} onSubmit={console.log}/>
 ```
 
-##### 3. Hit the submit button and see the errors appended to their respective fields
-
-```html 
-<p class="field-error-message">Please enter your last name</p>
-
-<p class="field-error-message">Please enter a description</p>
-```
-
-##### 4. Fill in some fields, hit the submit button, and get a payload like 
 ```javascript 
+// onSubmit logs 
 {
-  animal: "wildaboar"
-  countries: ['USA']
-  description: ""
-  favoriteColor: "green"
-  firstName: "Moonbean"
-  isHungry: true
-  lastName: "Sillers"
+  animal: 'wildaboar',
+  countries: ['USA'],
+  description: '',
+  favoriteColor: 'green',
+  firstName: 'Moonbean',
+  isHungry: true,
+  lastName: 'Sillers',
+  password: 'pass'
 }
 ```
 
+<img src="https://github.com/crshmk/react-form/blob/master/styled-example.png" width="300" />
 
-The above form creates this html
+---
+
+## Errors 
+
+Fields receive an optional `validation` prop. Returning `true` indicates a passing value. 
+```typescript 
+type Validation = (value: FormValue) => boolean
+```
+
+The `onSubmit` handler is only called if all validations pass. 
+
+If errors are present, error messages is appended to respective form items. 
+
+Error messages are removed when the user focuses the respective field. 
+
+---
+
+## API 
+
+### Form Fields 
+
+```typescript 
+type InputType = 'checkbox' | 'checkboxes' | 'password' | 'radio' | 'select' | 'text' | 'textarea' | undefined
+
+type CheckboxValue = boolean 
+type CheckboxesOrRadioOptions = string[] | ({ label: string, value: string })[]
+type FormValue = CheckboxValue | CheckboxesOrRadioOptions | string
+
+type FormField = {
+  errorMessage?: string 
+  initialValue?: FormValue
+  inputType?: InputType 
+  label?: string // defaults to capitalized `name`
+  name: string 
+  options?: CheckboxesOrRadioOptions 
+  placeholder?: string
+  rows?: number 
+  validation?: Validation
+}
+
+```
+
+```typescript
+import { validations } from 'react-form'
+const { minLen } = validations
+const fields: FormField[] = [
+  {
+    name: 'fullName'
+  },
+  {
+    name: 'description',
+    inputType: 'textarea',
+    label: 'What happened',
+    rows: 10,
+    validation: minLen(10),
+    errorMessage: 'Please really tell us',
+    placeholder: 'Tell us all about it'
+  },
+  {
+    name: 'isActive',
+    inputType: 'checkbox',
+    label: 'Is this active?',
+    initialValue: true 
+  }
+  {
+    name: 'hobbies',
+    inputType: 'checkboxes',
+    options: ['running', 'thinking', 'skiing'],
+    initialValue: ['running']
+  }
+
+]
+```
+
+| prop  | required | type | default | note
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| `name` | yes | `string`
+| `errorMessage` | | `string`  | `'Error'` |
+| `inputType` | | `InputType`, below  | `text`
+| `label` | | `string`  | Capitalized `name` prop 
+| `options` | | `string[]` | | for `checkboxes` or `radio`
+| `placeholder` | | `string`  | |
+| `rows` | | `number`  | | for `textarea` 
+| validation | | `(FormValue) => boolean`  | | 
+
+
+### Form Component
+
+```javascript 
+<Form 
+  fields={fields}
+  isSubmitButtonHidden={false}
+  onChange={console.log}
+  onSubmit={console.log}
+>
+```
+
+| prop  | type | default | note
+| ------------- | ------------- | ------------- | ------------- |
+| `fields`  | `FormField[]` | | 
+| `isSubmitButtonHidden`  | `boolean` | `false` | use `onChange`
+| `onChange`  | `(formData: FormData) => any`  | | fires on each form change
+| `onSubmit`  | `(formData: FormData) => any`  | |
+
+---
+
+## Dynamic Forms 
+
+Return the collection of fields from a hook. 
+
+```javascript 
+const allUserFields = [{ name: 'concern' }]
+const adminUserFields = [{ name: 'email' }]
+
+const useFormFields = () => {
+  const { isAdmin  } = useUser() 
+
+  let fields = allUserFields
+
+  if(isAdmin) {
+    fields =  fields.concat(adminUserFields)
+  }
+
+  return fields 
+}
+
+const UserForm = () => {
+  const fields = useFormFields()
+
+  return <Form fields={fields} onSubmit={console.log}>
+}
+
+```
+
+---
+
+
+## Styling 
+
+Bring your own CSS. There are plenty of selectors. 
+
+The above form creates this html. 
 
 ```html
 
 <div class="react-form ">
-  <div class="form-field form-field-text form-field-firstname">
-      <div class="form-item"><label>First Name<input name="firstName" placeholder="" type="text" value="sdfg"></label></div>
-  </div>
-  <div class="form-field form-field-text form-field-lastname">
-      <div class="form-item"><label>Last Name<input name="lastName" placeholder="" type="text" value="asdf"></label></div>
-  </div>
-  <div class="form-field form-field-textarea form-field-description">
-      <div class="form-item"><label>Description<textarea name="description" placeholder="Tell us all about it" type="textarea" rows="10">asdf</textarea></label></div>
-  </div>
-  <div class="form-field form-field-select form-field-favoritecolor">
-      <div class="form-item"><label>Choose your favorite color<select><option value=""></option><option value="red">red</option><option value="green">green</option><option value="blue">blue</option></select></label></div>
-  </div>
-  <div class="form-field form-field-radio form-field-animal">
-      <div class="form-item"><label>Animal<label>dog<input type="radio" value="dog"></label><label>wildaboar<input type="radio" value="wildaboar"></label></label>
-      </div>
-  </div>
-  <div class="form-field form-field-checkbox form-field-ishungry">
-      <div class="form-item"><label>Are you hungry?<input type="checkbox" value="isHungry"></label></div>
-  </div>
-  <div class="form-field form-field-checkboxes form-field-countries">
-      <div class="form-item"><label>Countries<label>USA<input type="checkbox" value="USA"></label><label>Vietnam<input type="checkbox" value="Vietnam"></label><label>Arigonia<input type="checkbox" value="Arigonia"></label></label>
-      </div>
-  </div><button type="submit">Submit</button>
+    <div class="form-field form-field-text form-field-firstname">
+        <div class="form-item"><label class="item-label"><span class="field-label">First Name</span><input name="firstName" placeholder="" type="text" value=""></label></div>
+    </div>
+    <div class="form-field form-field-text form-field-lastname">
+        <div class="form-item"><label class="item-label"><span class="field-label">Last Name</span><input name="lastName" placeholder="" type="text" value=""></label></div>
+        <p class="field-error-message">Please enter your last name</p>
+    </div>
+    <div class="form-field form-field-textarea form-field-description">
+        <div class="form-item"><label class="item-label"><span class="field-label">Description</span><textarea name="description" placeholder="Tell us all about it" type="textarea" rows="5"></textarea></label></div>
+    </div>
+    <div class="form-field form-field-password form-field-password">
+        <div class="form-item"><label class="item-label"><span class="field-label">Password</span><input name="password" placeholder="" type="password" value="asdf"><div class="show-password-button">
+          <svg width="30" height="30"></svg></div></label></div>
+    </div>
+    <div class="form-field form-field-select form-field-favoritecolor">
+        <div class="form-item"><label class="item-label"><span class="field-label">Choose your favorite color</span><select name="favoriteColor"><option value=""></option><option value="red">red</option><option value="green">green</option><option value="blue">blue</option></select></label></div>
+    </div>
+    <div class="form-field form-field-radio form-field-animal">
+        <div class="form-item"><label class="item-label"><span class="field-label">Animal</span><label class="form-field-group"><span class="replaced-input-radio " tabindex="0"><span></span></span><span class="group-option-label">dog</span><input type="radio" value="dog"></label><label class="form-field-group"><span class="replaced-input-radio checked" tabindex="0"><span></span></span><span class="group-option-label">wildaboar</span><input type="radio" value="wildaboar"></label></label>
+        </div>
+    </div>
+    <div class="form-field form-field-checkbox form-field-ishungry">
+        <div class="form-item"><label class="item-label"><span class="field-label">Are you hungry?</span><span class="replaced-input-checkbox checked" tabindex="0"><span><svg height="17" viewBox="0 0 13 13" width="17"></svg></span></span><input name="isHungry" class="form-input-checkbox" type="checkbox" value="isHungry"></label></div>
+    </div>
+    <div class="form-field form-field-checkboxes form-field-countries">
+        <div class="form-item"><label class="item-label"><span class="field-label">Countries</span><label class="form-field-group"><span class="replaced-input-checkboxes checked" tabindex="0"><span>
+          <svg height="17" viewBox="0 0 13 13" width="17"></svg></span></span><span class="group-option-label">USA</span><input type="checkbox" value="USA"></label><label class="form-field-group"><span class="replaced-input-checkboxes checked" tabindex="0"><span>
+            <svg height="17" viewBox="0 0 13 13" width="17"></svg></span></span><span class="group-option-label">Vietnam</span><input type="checkbox" value="Vietnam"></label><label class="form-field-group"><span class="replaced-input-checkboxes " tabindex="0"><span><svg height="17" viewBox="0 0 13 13" width="17"></svg></span></span><span class="group-option-label">Arigonia</span><input type="checkbox" value="Arigonia"></label></label>
+        </div>
+    </div><button type="submit">Submit</button>
 </div>
 ```
-
-## API 
-
-### Required fields 
-`name` (required): the key on the submitted form object 
-
-### Optional fields 
-- `inputType` defaults to `text`; possible values are 
-```typescript 
-'checkbox' | 'checkboxes' | 'password' | 'radio' | 'select' | 'text' | 'textarea' | undefined
-```
-- `label: string` label for the form field; defaults to the pascal case version of the `name`  
-- `onSubmit: (payload: formPayload) => any` the callback for the submit button
-- `validation: (value: formValue) => boolean` a validation function to run on the field onSubmit. If any validations return false, onSubmit is not called, and errors are appended to respective form fields. 
-- `errorMessage: string` defaults to 'Error'
-- `placeholder: string` 
-- `options: string[]`: options for a radio or checkbox group 
-- `rows: number` for textarea; defaults to `10`
-- `onChange: (payload: formPayload) => any` handler to emit the submit payload on each form change 
-- `isSubmitButtonHidden: boolean` useful if you only need the `onChange` handler
----
-
-## Defining Fields
-
-### Text 
-
-creates an input field of type `text`
-fields without an 'inputType' prop default to inputType `text`
-```javascript 
-{
-  name: 'firstName'
-}
-```
-```jsx
-<input type="text" />
-```
-> submits { firstName: '' }
-
-### Textarea 
-```jsx
-<textarea />
-```
-```javascript 
-{
-  name: 'description',
-  inputType: 'textarea'
-}
-```
-
-### Password 
-
-> comes with icon to toggle hidden state
-```javascript 
-{
-  name: 'secretPassword',
-  inputType: 'password '
-}
-```
-```jsx
-<input type="password" />
-```
-
-### Select  
-```javascript 
-{
-  name: 'color',
-  inputType: 'select',
-  options: ['red', 'green']
-}
-```
-```jsx
-<select>
-  <option value="red">red</option>
-  <option value="green">green</option>
-</select>
-```
-> submits { color: 'red' }
-
-### Single Checkbox 
-```jsx 
-<input type="checkbox" value="isNice" checked={true} />
-```
-```javascript 
-{
-  name: 'isNice',
-  inputType: 'checkbox'
-}
-```
-> submits { isNice: true }
-
-### Checkbox Group
-```jsx 
-<>
-<input type="checkbox" value="red" checked={true} />
-<input type="checkbox" value="green" checked={false} />
-</>
-```
-```javascript 
-{
-  name: 'colors',
-  inputType: 'checkboxes',
-  options: ['red', 'green']
-}
-```
-> submits { colors: ['red'] }
-
-
-### Radio Group
-```jsx 
-<>
-<input type="radio" value="dog" checked={true} />
-<input type="radio" value="wildaboar" checked={false} />
-</>
-```
-```javascript 
-{
-  name: 'animal',
-  inputType: 'checkboxes',
-  options: ['dog', 'wildaboar']
-}
-```
-> submits { animal: 'wildaboar' }
-

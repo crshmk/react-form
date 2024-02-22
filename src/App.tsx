@@ -2,7 +2,7 @@ import './style.css'
 
 import Form from './Form'
 
-import { isRequired, minLen } from './validations'
+import { minLen } from './validations'
 
 const fields: PassedFormField[] = [
   {
@@ -11,15 +11,17 @@ const fields: PassedFormField[] = [
   {
     name: 'lastName',
     inputType: 'text',
-    validation: isRequired,
+    validation: minLen(2),
     errorMessage: 'Please enter your last name'
   },
   {
     name: 'description',
     inputType: 'textarea',
-    validation: minLen(10),
-    errorMessage: 'Please enter a description',
     placeholder: 'Tell us all about it'
+  },
+  {
+    name: 'password',
+    inputType: 'password'
   },
   {
     name: 'favoriteColor',
@@ -44,13 +46,13 @@ const fields: PassedFormField[] = [
   }
 ]
 const App = () => (
-  <Form 
-    fields={fields} 
-    onChange={console.log}
-    onSubmit={console.log} 
-    submitButtonLabel="GoForIt"
-    isSubmitButtonHidden={true}
-  />
+  <div className="wrapper">
+    <Form 
+      fields={fields} 
+      onChange={console.log}
+      onSubmit={console.log} 
+    />
+  </div>
 )
 
 export default App

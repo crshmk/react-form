@@ -1,7 +1,7 @@
 import { InputProps } from '../makeInputProps'
 
 const Textarea = (props: Props) => {
-  return <textarea {...props} rows={10} />
+  return <textarea {...props} rows={5} />
 }
 
 export default Textarea

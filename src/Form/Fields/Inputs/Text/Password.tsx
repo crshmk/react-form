@@ -13,7 +13,7 @@ const Password = (props: InputProps) => {
   return (
     <>
      <input {...props} type={inputType} />
-d    <div className="show-password-button" onClick={onToggleViewPassword}>
+     <div className="show-password-button" onClick={onToggleViewPassword}>
       {inputType === 'password' && <EyeFilled />}
       {inputType !== 'password' && <EyeSlash />}
     </div>
