@@ -1,7 +1,7 @@
 import { memo } from 'react'
 
-import ErrorMessage from './ErrorMessage'
 import Label from './Label'
+import Messages from './Messages'
 
 import getInput from './getInput'
 
@@ -37,7 +37,11 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
         <Input {...inputProps} />
       </Label>
       </div>
-      <ErrorMessage errorMessage={errorMessage} />
+      <Messages 
+        errorMessage={errorMessage}
+        field={field as FormField & { maxLen: any}}
+        value={value as string}
+      />
     </div>
   )
 }, isFieldUnchanged)
@@ -51,11 +55,3 @@ type Props = {
   setValues: SetValues
   value: FormValue
 }
-
-/*
-
-values={values}
-      setValue={isPresent(field.setState) ? field.setState : setValue}
-      validationError={validationErrors[field.i]}
-      clearValidation={clearValidation(field.i)}
-*/

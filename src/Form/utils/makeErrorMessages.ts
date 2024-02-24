@@ -12,7 +12,7 @@ type MakeErrorMessages = (fields: FormField[], values: FormValue[]) =>
 const makeErrorMessages: MakeErrorMessages = (fields, values) => 
   fields.map((field, i) => {
   if(!field.validation) return ''
-  const isValid = field.validation(values[i])
+  const isValid = field.validation(values[i] as string)
   return isValid ? '' : (field.errorMessage || 'Error')
 })
 

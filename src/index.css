@@ -257,3 +257,13 @@ button[type="submit"] {
   -webkit-box-shadow: inset 0 0 0 1px #1877F1;
   box-shadow: inset 0 0 0 1px #1877F1;
 }
+
+.max-len {
+  position: absolute;
+  bottom: 18px;
+  right: 0;
+}
+
+.max-len.exceeded {
+  color: red;
+}

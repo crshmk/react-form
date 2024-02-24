@@ -1,3 +1,3 @@
-type MinLen = (n: number) => Validation 
+type MinLen = (n: number) => (value: string) => boolean 
 export const minLen: MinLen = n => value => 
-  value.length >= n
+  value.length >= n 

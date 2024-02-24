@@ -2,7 +2,7 @@ import './style.css'
 
 import Form from './Form'
 
-import { minLen } from './validations'
+import { maxLen, minLen } from './validations'
 
 const fields: PassedFormField[] = [
   {
@@ -17,7 +17,10 @@ const fields: PassedFormField[] = [
   {
     name: 'description',
     inputType: 'textarea',
-    placeholder: 'Tell us all about it'
+    placeholder: 'Tell us all about it',
+    maxLen: 45,
+    validation: value => minLen(10)(value) && maxLen(45)(value),
+    errorMessage: 'Description must be 10 - 45 characters'
   },
   {
     name: 'password',
