@@ -4,7 +4,7 @@ import createValuesState from './utils/createValuesState'
 import extendFields from './utils/extendFields'
 import makeInitialErrorMessages from './utils/makeInitialErrorMessages'
 
-type MakeClassName = (formName: Api['formName']) => string 
+type MakeClassName = (formName: Api['formName']) => `react-form${string}` 
 const makeClassName: MakeClassName = formName => 
   `react-form ${!formName ? '' : formName.toLowerCase()}`
 
