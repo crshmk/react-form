@@ -1,4 +1,4 @@
-// @ts-nocheck
+import { FC } from 'react'
 import { always, cond, equals, T } from 'ramda'
 
 import Checkbox from './Inputs/Checkbox'
@@ -7,8 +7,8 @@ import Radio from './Inputs/Radio'
 import Select from './Inputs/Select'
 import Text from './Inputs/Text'
 
-// TODO: figure out how to type this 
-type GetInput = (inputType: InputType) => JSX.Element
+// the typing for { inputType: InputType } is too problematic with equals curried into cond
+type GetInput = (inputType: string) => FC
 const getInput: GetInput = cond([
   [equals('text'), always(Text)],
   [equals('textarea'), always(Text)],

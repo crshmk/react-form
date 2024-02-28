@@ -1,10 +1,10 @@
 /**
  * create radio or checkbox options for a group of inputs
  */
-import CheckIcon from '../../../assets/icons/Check'
+import CheckIcon from '../../../../assets/icons/Check'
 
-
-const makeGroupOption = (onChange: OnChange, field: FormField, value: string) => (option: string) => {
+type MakeGroupOption = (onChange: OnChange, field: FormField, value: string | string[]) => (option: string) => JSX.Element
+const makeGroupOption: MakeGroupOption = (onChange, field, value) => option => {
 
   const isRadio = field.inputType === 'radio'
 
@@ -12,7 +12,7 @@ const makeGroupOption = (onChange: OnChange, field: FormField, value: string) =>
   const inputType = isRadio ? 'radio' : 'checkbox'
 
   const visibleInputClassName = `replaced-input-${field.inputType} ` + (isChecked ? 'checked' : '')
-  let hiddenInputClassName = `form-input-${field.inputType}` 
+  // let hiddenInputClassName = `form-input-${field.inputType}` 
   //hiddenInputClassName += isEmpty('validationError') ? '' : ' invalid'
 
   return (

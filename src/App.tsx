@@ -52,7 +52,6 @@ const App = () => (
   <div className="wrapper">
     <Form 
       fields={fields} 
-      onChange={console.log}
       onSubmit={console.log} 
     />
   </div>

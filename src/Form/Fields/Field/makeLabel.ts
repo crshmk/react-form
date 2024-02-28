@@ -4,7 +4,7 @@
  * assumes a camel cased name 
  * @param {FormField} field 
  * 
- * @return {FormField['label'] | string}
+ * @return {FormField['label'] | string }
  */
 import { 
   complement, 

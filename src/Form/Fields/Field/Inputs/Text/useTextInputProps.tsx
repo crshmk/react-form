@@ -1,9 +1,14 @@
-import { update } from 'ramda'
-import { Props as TextProps} from './Text'
+import useField from '../../../useField'
 
-const makeInputProps = ({ errorMessage, clearError, field, setValues, value }: TextProps): InputProps => {
+import { update } from 'ramda'
+
+const useInputProps = () => {
+  const { errorMessage, clearError, field, setValues, value } = useField() 
   const { inputType, name, placeholder } = field
+
+  // TODO add to api when dynamic forms migrated 
   const isDisabled = false
+
   const onType: OnChange = e => 
     setValues(update(field.i, e.target.value))
 
@@ -21,7 +26,7 @@ const makeInputProps = ({ errorMessage, clearError, field, setValues, value }: T
   }
 }
 
-export default makeInputProps
+export default useInputProps
 
 export type InputProps = {
   className: string

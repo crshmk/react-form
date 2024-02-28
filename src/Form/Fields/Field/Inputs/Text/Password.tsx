@@ -1,18 +1,20 @@
 import { useState } from 'react'
-import EyeFilled from '../../../../assets/icons/EyeFilled'
-import EyeSlash from '../../../../assets/icons/EyeSlash'
 
-import { InputProps } from '../makeInputProps'
+import useTextInputProps from './useTextInputProps'
 
-const Password = (props: InputProps) => { 
+import EyeFilled from '../../../../../assets/icons/EyeFilled'
+import EyeSlash from '../../../../../assets/icons/EyeSlash'
+
+const Password = () => { 
   const [inputType, setInputType] = useState('password')
+  const inputProps = useTextInputProps()
 
   const onToggleViewPassword = () =>
     setInputType(prev => prev === 'password' ? 'text' : 'password')
 
   return (
     <>
-     <input {...props} type={inputType} />
+     <input {...inputProps} type={inputType} />
      <div className="show-password-button" onClick={onToggleViewPassword}>
       {inputType === 'password' && <EyeFilled />}
       {inputType !== 'password' && <EyeSlash />}

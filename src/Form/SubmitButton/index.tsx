@@ -1,4 +1,8 @@
-const SubmitButton = ({isSubmitButtonHidden, onSubmit, submitButtonLabel}: Props) => {
+const SubmitButton = ({
+  isSubmitButtonHidden, 
+  onSubmit, 
+  submitButtonLabel
+}: Props) => {
   return isSubmitButtonHidden? null : (
     <button 
       type="submit" 

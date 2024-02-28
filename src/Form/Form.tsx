@@ -51,7 +51,7 @@ const Form = (props: Props) => {
     props.onSubmit && props.onSubmit(payload)
   }
 
-  const fieldsProps = {
+  const fieldsProps: FieldsProps = {
     clearError, 
     errorMessages, 
     fields, 

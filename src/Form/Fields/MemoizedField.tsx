@@ -1,11 +1,11 @@
 import { memo } from 'react'
 
-import Label from './Label'
+import { FieldProvider } from './useField'
+
+import Field from './Field'
 import Messages from './Messages'
 
-import getInput from './getInput'
-
-type IsFieldUnchanged = (prev: Props, next: Props) => boolean
+type IsFieldUnchanged = (prev: FieldContext, next: FieldContext) => boolean
 const isFieldUnchanged: IsFieldUnchanged = (prev, next) => 
   prev.value === next.value && prev.errorMessage === next.errorMessage
 
@@ -15,41 +15,25 @@ const getClassName: GetClassName = field => {
   return `form-field form-field-${field.inputType} form-field-${name}`
 }
 
-const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value }: Props) => {
-  const { inputType } = field 
+const MemoizedField = memo((props: FieldContext) => {
 
-  const className = getClassName(field)
-  
-  const inputProps =  {
-    clearError,
-    errorMessage,
-    field, 
-    setValues,
-    value: value as string
-  }
-
-  const Input = getInput(inputType)
+  const className = getClassName(props.field)
 
   return (
-    <div key={field.name} className={className}>
+    <div key={props.field.name} className={className}>
+      <FieldProvider {...props}>
       <div className="form-item">
-      <Label field={field}>
-        {/* @ts-ignore */}
-        <Input {...inputProps} />
-      </Label>
+        <Field />
       </div>
-      <Messages 
-        errorMessage={errorMessage}
-        field={field as FormField & { maxLen: any }}
-        value={value as string}
-      />
+      <Messages />
+      </FieldProvider>
     </div>
   )
 }, isFieldUnchanged)
 
 export default MemoizedField
 
-type Props = {
+export type FieldContext = {
   clearError: (i: number) => () => void
   errorMessage: string
   field: FormField 

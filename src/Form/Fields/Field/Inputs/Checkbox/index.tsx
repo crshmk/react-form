@@ -1,8 +1,11 @@
+import useField from '../../../useField'
+
 import { update } from 'ramda'
 
-import CheckIcon from '../../../../assets/icons/Check'
+import CheckIcon from '../../../../../assets/icons/Check'
 
-const Checkbox = ({field, setValues, value}: CheckboxInputProps) => {
+const Checkbox = () => {
+  const {field, setValues, value} = useField()
 
   const onChange = () => {
     setValues(update(field.i, !value))
@@ -23,7 +26,7 @@ const Checkbox = ({field, setValues, value}: CheckboxInputProps) => {
       className={inputClassName}
       type="checkbox" 
       value={field.name} 
-      checked={value} 
+      checked={value as boolean} 
       onChange={onChange} 
     />
     </>

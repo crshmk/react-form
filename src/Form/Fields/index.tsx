@@ -1,7 +1,7 @@
 import MemoizedField from './MemoizedField'
 
-type makeFields = (props: FieldProps) => JSX.Element[]
-const makeFields: makeFields = ({ 
+type MakeFields = (props: FieldsProps) => JSX.Element[]
+const makeFields: MakeFields = ({ 
   clearError, 
   errorMessages, 
   fields, 
@@ -18,19 +18,10 @@ const makeFields: makeFields = ({
     />
 ))
 
-const Fields = (props: FieldProps) => {
-
+const Fields = (props: FieldsProps) => {
   const fields = makeFields(props)
-  
   return <>{fields}</>
 }
 
 export default Fields
 
-type FieldProps = {
-  clearError: (i: number) => () => void
-  errorMessages: string[]
-  fields: FormField[]
-  setValues: React.Dispatch<React.SetStateAction<FormValue[]>>
-  values: FormValue[]
-}
