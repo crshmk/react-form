@@ -9,8 +9,10 @@ const Password = () => {
   const [inputType, setInputType] = useState('password')
   const inputProps = useTextInputProps()
 
-  const onToggleViewPassword = () =>
+  const onToggleViewPassword = (e: OnClickEvent) => {
+    e.preventDefault()
     setInputType(prev => prev === 'password' ? 'text' : 'password')
+  }
 
   return (
     <>
@@ -24,3 +26,6 @@ const Password = () => {
 }
 
 export default Password 
+
+
+type OnClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>
