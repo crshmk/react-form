@@ -3,15 +3,14 @@ import Textarea from './Textarea'
 
 import makeInputProps from '../makeInputProps'
 
-const getIsPassword = (field: FormField): boolean =>
-  field.inputType === 'password'
-
 const Text = (props: Props) => {
   const inputProps = makeInputProps(props)
 
-  return getIsPassword(props.field) 
+  const { inputType } = props.field
+
+  return inputType === 'password'
   ? <Password {...inputProps} /> 
-  : props.field.inputType === 'textarea' 
+  : inputType === 'textarea' 
     ? <Textarea {...inputProps} />
     : <input {...inputProps} />
 }
@@ -19,6 +18,7 @@ const Text = (props: Props) => {
 export default Text
 
 export type Props = {
+  errorMessage?: string
   clearError: (i: number) => () => void
   field: FormField 
   setValues: SetValues

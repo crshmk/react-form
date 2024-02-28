@@ -267,3 +267,7 @@ button[type="submit"] {
 .max-len.exceeded {
   color: red;
 }
+
+.form-field .invalid {
+  border: 1px solid red;
+}

@@ -22,6 +22,7 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
   
   const inputProps =  {
     clearError,
+    errorMessage,
     field, 
     setValues,
     value: value as string
@@ -39,7 +40,7 @@ const MemoizedField = memo(({ clearError, errorMessage, field, setValues, value 
       </div>
       <Messages 
         errorMessage={errorMessage}
-        field={field as FormField & { maxLen: any}}
+        field={field as FormField & { maxLen: any }}
         value={value as string}
       />
     </div>

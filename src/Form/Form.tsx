@@ -4,6 +4,7 @@ import { any, complement, isEmpty, update } from 'ramda'
 
 import makeErrorMessages from './utils/makeErrorMessages'
 import makeSubmitPayload from './utils/makeSubmitPayload'
+import scrollToInvalidField from './utils/scrollToInvalidField'
 
 import Fields from './Fields'
 import SubmitButton from './SubmitButton'
@@ -42,6 +43,7 @@ const Form = (props: Props) => {
  
     if(anyPresent(newErrorMessages)) {
       setErrorMessages(newErrorMessages)
+      setTimeout(scrollToInvalidField, 0)
       return 
     }
 
