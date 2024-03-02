@@ -45,9 +45,20 @@ const fields: PassedFormField[] = [
   {
     name: 'countries',
     inputType: 'checkboxes',
-    options: ['USA', 'Vietnam', 'Arigonia']
+    options: ['USA', { label: 'Vietnam', value: 'VN' }, 'Arigonia']
+  },
+  {
+    name: 'number',
+    inputType: 'radio',
+    options: [
+      {label: 'one', value: '1'},
+      {label: 'two', value: '2'},
+      {label: 'three', value: '3'},
+      {label: 'four', value: '4'}
+    ]
   }
 ]
+
 const App = () => (
   <div className="wrapper">
     <Form 

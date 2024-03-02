@@ -1,20 +1,14 @@
 import useField from '../../useField'
 
 import { update } from 'ramda'
-/*
-TODO overload option as string | { label: string, value: string }
+
+import getOptionLabelAndValue from './getOptionLabelAndValue'
+
 const makeOptions = (options: SelectOption[]) => 
   options.map(option => {
-    const [label, value] = typeof option === 'string' 
-    ? [option, option] 
-    : [option.label, option.value]
-    return <option key={value} value={value}>{label}</option> 
+    const [optionLabel, optionValue] = getOptionLabelAndValue(option)
+    return <option key={optionValue} value={optionValue}>{optionLabel}</option>
   })
-*/
-const makeOptions = (options: SelectOption[]) => 
-  options.map(option => 
-    <option key={option} value={option}>{option}</option>
-  )
 
 const Select = () => {
   const { field, setValues, value } = useField()

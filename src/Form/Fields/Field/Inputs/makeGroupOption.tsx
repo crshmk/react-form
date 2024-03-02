@@ -3,12 +3,18 @@
  */
 import CheckIcon from '../../../../assets/icons/Check'
 
-type MakeGroupOption = (onChange: OnChange, field: FormField, value: string | string[]) => (option: string) => JSX.Element
-const makeGroupOption: MakeGroupOption = (onChange, field, value) => option => {
+import getOptionLabelAndValue from './getOptionLabelAndValue'
+
+type MakeGroupOption =
+  (onChange: OnChange, field: FormField, selection : string | string[]) => 
+    (option: SelectOption) => JSX.Element
+const makeGroupOption: MakeGroupOption = (onChange, field, selection) => option => {
+
+  const [optionLabel, optionValue] = getOptionLabelAndValue(option)
 
   const isRadio = field.inputType === 'radio'
 
-  const isChecked = isRadio ? value === option : value.includes(option) 
+  const isChecked = isRadio ? selection === optionValue : selection.includes(optionValue) 
   const inputType = isRadio ? 'radio' : 'checkbox'
 
   const visibleInputClassName = `replaced-input-${field.inputType} ` + (isChecked ? 'checked' : '')
@@ -16,17 +22,17 @@ const makeGroupOption: MakeGroupOption = (onChange, field, value) => option => {
   //hiddenInputClassName += isEmpty('validationError') ? '' : ' invalid'
 
   return (
-    <label key={option} className="form-field-group">
+    <label key={optionValue} className="form-field-group">
       <span className={visibleInputClassName} tabIndex={0}>
         <span>
-          {!isRadio && <CheckIcon color={value ? 'green' : 'white'} />}
+          {!isRadio && <CheckIcon color={isChecked ? 'green' : 'white'} />}
         </span>
       </span>
-      <span className="group-option-label">{option}</span>
+      <span className="group-option-label">{optionLabel}</span>
       <input 
         checked={isChecked}
         type={inputType}
-        value={option} 
+        value={optionValue} 
         onChange={onChange} 
       />
     </label>

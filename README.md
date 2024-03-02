@@ -49,7 +49,11 @@ const userFormFields = [
   {
     name: 'countries',
     inputType: 'checkboxes',
-    options: ['USA', 'Vietnam', 'Arigonia']
+    options: [
+      'USA', 
+      { label: 'Vietnam', value: 'VN' },
+      { label: 'Arigonia', value: 'AR' }
+    ]
   }
 ]
 
@@ -161,7 +165,7 @@ const fields: FormField[] = [
 | `errorMessage` | | `string`  | `'Error'` |
 | `inputType` | | `InputType`, below  | `text`
 | `label` | | `string`  | Capitalized `name` prop 
-| `options` | | `string[]` | | for `checkboxes` or `radio`
+| `options` | | `string[]` or  `{ label: string, value: string }[]` | | for `checkboxes`, `radio`, `select`
 | `placeholder` | | `string`  | |
 | `rows` | | `number`  | | for `textarea` 
 | validation | | `(FormValue) => boolean`  | | 
