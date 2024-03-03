@@ -1,6 +1,6 @@
 import makeInitialErrorMessages from '../makeInitialErrorMessages'
 
-import { passedFields } from './createValuesState.test.js'
+import { passedFields } from '../mockFields'
 
 const expected = Array(passedFields.length).fill('')
 

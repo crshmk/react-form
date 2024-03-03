@@ -8,7 +8,7 @@ type MakeClassName = (formName: Api['formName']) => `react-form${string}`
 const makeClassName: MakeClassName = formName => 
   `react-form ${!formName ? '' : formName.toLowerCase()}`
 
-const FormWrapper = (props: Api) => {
+export const FormWrapper = (props: Api) => {
   const { 
     fields,
     formName

@@ -1,8 +1,8 @@
 import './style.css'
 
-import Form from './Form'
+import Form from '../src/Form'
 
-import { maxLen, minLen } from './validations'
+import { maxLen, minLen } from '../src/validations'
 
 const fields: PassedFormField[] = [
   {

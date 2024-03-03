@@ -4,7 +4,7 @@ import extendFormFields from '../'
 
 import { map, prop, take } from 'ramda'
 
-import { passedFields } from '../../__tests__/createValuesState.test.js'
+import { passedFields } from '../../mockFields'
 
 describe('addDefaultInputTypes', () => {
   test('defaults fields to an input type of text', () => {

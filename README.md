@@ -89,4 +89,4 @@ const UserForm = () =>
 ---
 
 
-<img src="https://github.com/crshmk/react-form/blob/master/example.png" width="600" />
+<img src="https://github.com/crshmk/react-form/blob/master/example.png" width="500" />
